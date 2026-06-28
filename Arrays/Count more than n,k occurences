@@ -1,0 +1,141 @@
+More than n/k Occurrences
+Difficulty: EasyAccuracy: 58.35%Submissions: 137K+Points: 2Average Time: 45m
+Given an array arr and an element k. The task is to find the count of elements in the array that appear more than n/k times and n is length of arr.
+
+Examples :
+
+Input: arr = [3, 1, 2, 2, 1, 2, 3, 3], k = 4
+Output: 2
+Explanation: In the given array, 3 and 2 are the only elements that appears more than n/k times.
+Input: arr = [2, 3, 3, 2], k = 3
+Output: 2
+Explanation: In the given array, 3 and 2 are the only elements that appears more than n/k times. So the count of elements are 2.
+Input: arr = [1, 4, 7, 7], k = 2
+Output: 0
+Explanation: In the given array, no element appears more than n/k times.
+
+using brute force
+class Solution {
+  public:
+    // Function to find all elements in array that appear more than n/k times.
+    int countOccurence(vector<int>& arr, int k) {
+        // Your code here
+        int n=arr.size();
+        int count=0;
+        int req=n/k;
+    
+        for(int i=0;i<n;i++){
+            int temp=0;
+            for(int j=i;j<n;j++){//earlier i started it wtih j=0 making the duplicate counts
+                if(arr[i]==arr[j]){
+                    temp++;
+                }
+            }
+            if(temp>req){
+                count++;
+            }
+        }
+        return count;
+    }
+};
+it has nested loop making its complexity O(n^2)
+Test Cases Passed: 
+3 /1111
+For Input : 
+0 5 6 6 0 4 3 1 5 3 2 6 1 2
+11
+Your Code's output is: 
+7
+It's Correct output is: 
+6
+Output Difference: 
+76
+Suppose the element 6 appears 3 times.
+
+At i = 2, temp = 3 → count++
+At i = 3, temp = 2 → count++ ❌
+At i = 11, temp = 1
+
+So the same element (6) gets counted more than once.
+
+That's why your answer is 7 instead of 6.
+it failed here
+
+class Solution {
+  public:
+    // Function to find all elements in array that appear more than n/k times.
+    int countOccurence(vector<int>& arr, int k) {
+        // Your code here
+        int n=arr.size();
+        int count=0;
+        int req=n/k;
+    
+        for(int i=0;i<n;i++){
+           
+            bool visited=false;
+            for (int p = 0; p < i; p++) {
+                if (arr[p] == arr[i]) {
+                    visited = true;
+                    break;
+                }}
+            if(visited)continue;
+             int temp=0;
+            for(int j=i;j<n;j++){
+                if(arr[i]==arr[j]){
+                    temp++;
+                }
+            }
+            if(temp>req){
+                count++;
+            }
+        }
+        return count;
+    }
+};
+
+
+using mooore voting algo is tough so i leave that for later here is mj n/2 
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int n=nums.size();
+        int freq=0,ans=0;
+        for(int i=0;i<n;i++){
+            if(freq==0){
+                ans=nums[i];
+            }
+            if(ans==nums[i]){
+                freq++;
+            }
+            else{
+                freq--;
+            }
+        }
+        return ans;
+        
+    }
+};
+
+count more than n/k using unordered map
+class Solution {
+public:
+    int countOccurence(vector<int>& arr, int k) {
+
+        int count = 0;
+        unordered_map<int, int> freq;
+
+        // Count frequency of each element
+        for (int x : arr) {
+            freq[x]++;
+        }
+
+        // Count elements occurring more than n/k times
+        for (auto it : freq) {
+            if (it.second > arr.size() / k) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+};
