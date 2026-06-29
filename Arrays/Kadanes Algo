@@ -1,0 +1,84 @@
+Maximum Subarray Sum - Kadane's Algorithm
+Last Updated : 15 Apr, 2026
+Given an integer array arr[], find the subarray (containing at least one element) which has the maximum possible sum, and return that sum.
+Note: A subarray is a continuous part of an array.
+
+Examples:
+
+Input: arr[] = [2, 3, -8, 7, -1, 2, 3]
+Output: 11
+Explanation: The subarray [7, -1, 2, 3] has the largest sum 11.
+
+Input: arr[] = [-2, -4]
+Output: -2
+Explanation: The subarray [-2] has the largest sum -2.
+
+Input: arr[] = [5, 4, 1, 7, 8]
+Output: 25
+Explanation: The subarray [5, 4, 1, 7, 8] has the largest sum 25.
+
+my 1st brute force approach
+class Solution {
+  public:
+    int maxSubarraySum(vector<int> &arr) {
+        // Code here
+        int n =arr.size();
+        int MaxSum=0,sum=0;//max=arr[0] because it may not check the negative part as 0>neg
+        for(int i =0 ;i<n;i++){
+            sum=arr[i];//as j==i its calculating it twice;
+            for(int j=i;j<n;j++){
+                sum+=arr[j];
+            }
+            if(sum>MaxSum){//only checking at the end making it go from left to right and not length wise 
+                MaxSum=sum;
+            }
+            
+        }
+        return MaxSum;
+    }
+};
+
+corrected brute force approach
+class Solution {
+  public:
+    int maxSubarraySum(vector<int> &arr) {
+        // Code here
+        int n =arr.size();
+        int MaxSum=arr[0];//or INT_MIN
+        for(int i =0 ;i<n;i++){
+            int sum=0;
+            for(int j=i;j<n;j++){
+                sum+=arr[j];
+                MaxSum=max(MaxSum,sum);
+            }
+            
+            
+        }
+        return MaxSum;
+    }
+};
+complexity O(n^2)
+Space O(1)
+
+Kadane's algo says that if we are adding a big negative number to the sum the sum will decrease in such cases reset the current sum  
+to 0 beacuse the subarray is continous;
+
+class Solution {
+  public:
+    int maxSubarraySum(vector<int> &arr) {
+        // Code here
+        int n =arr.size();
+        int MaxSum=INT_MIN;
+        int sum=0;
+        for(int i =0 ;i<n;i++){
+            sum+=arr[i];
+            MaxSum=max(MaxSum,sum);
+            if(sum<0){
+                sum=0;
+            }
+        }
+        return MaxSum;
+    }
+};
+complexity O(n)
+space O(1)
