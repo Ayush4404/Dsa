@@ -73,3 +73,41 @@ Your Total Score:
 Time Taken
 0.24
 Solve Next
+
+
+optimal index marking approach
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+        int n = nums.size();
+
+        // Step 1: Replace invalid values with 0
+        for (int i = 0; i < n; i++) {
+            if (nums[i] <= 0 || nums[i] > n)
+                nums[i] = 0;
+        }
+
+        // Step 2: Mark present numbers
+        for (int i = 0; i < n; i++) {
+            int val = abs(nums[i]);
+
+            if (val == 0 || val > n)
+                continue;
+
+            int idx = val - 1;
+
+            if (nums[idx] > 0)
+                nums[idx] = -nums[idx];
+            else if (nums[idx] == 0)
+                nums[idx] = -(n + 1);
+        }
+
+        // Step 3: Find first missing positive
+        for (int i = 0; i < n; i++) {
+            if (nums[i] >= 0)
+                return i + 1;
+        }
+
+        return n + 1;
+    }
+};
