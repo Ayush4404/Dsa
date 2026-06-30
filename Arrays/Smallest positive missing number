@@ -1,0 +1,75 @@
+Smallest Missing Positive Number
+Last Updated : 23 Jul, 2025
+Given an unsorted array arr[] with both positive and negative elements, find the smallest positive number missing from the array.
+
+Examples:
+
+Input: arr[] = [2, -3, 4, 1, 1, 7]
+Output: 3
+Explanation: 3 is the smallest positive number missing from the array.
+
+Input: arr[] = [5, 3, 2, 5, 1]
+Output: 4
+Explanation: 4 is the smallest positive number missing from the array.
+
+Input: arr[] = [-8, 0, -1, -4, -3]
+Output: 1 
+Explanation: 1 is the smallest positive number missing from the array.
+
+my first brute force 
+class Solution {
+  public:
+    int missingNumber(vector<int> &arr) {
+        // code here
+        int n=arr.size();
+        int missing=arr[0];
+        for(int i=1;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(i!=arr[j]){
+                    missing=i;// this will not give the min of the positive number and keep replacing the value
+                }
+                else break;//also a problem 
+            }
+        }
+        return missing;
+    }
+};
+
+2nd approach with chatgpt help
+class Solution {
+  public:
+    int missingNumber(vector<int> &arr) {
+        // code here
+        int n=arr.size();
+        for(int i=1;i<=n+1;i++){//for the edge case in case all the number are positive so the smallest missing positive number is the the n+1
+            bool found=false;//using boolean flag
+            for(int j=0;j<n;j++){
+                if(i==arr[j]){
+                    found=true;
+                }
+            }
+            if(found==false){//checking after traversing all the element because in the previous app i was changing the number immdiately not thinking
+about if it came after
+                return i;
+            }
+        }
+        return n+1;
+    }
+};
+complexity of space O(1)
+time comp is O(n^2)
+Problem Solved Successfully
+Suggest Feedback
+Test Cases Passed
+1125 / 1125
+Attempts : Correct / Total
+1 / 2
+Accuracy :
+50%
+Points Scored 
+4 / 4
+Your Total Score:
+16 
+Time Taken
+0.24
+Solve Next
