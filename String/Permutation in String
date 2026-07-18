@@ -1,0 +1,135 @@
+567. Permutation in String
+Medium
+Topics
+premium lock icon
+Companies
+Hint
+Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
+
+In other words, return true if one of s1's permutations is the substring of s2.
+
+ 
+
+Example 1:
+
+Input: s1 = "ab", s2 = "eidbaooo"
+Output: true
+Explanation: s2 contains one permutation of s1 ("ba").
+Example 2:
+
+Input: s1 = "ab", s2 = "eidboaoo"
+Output: false
+ 
+
+Constraints:
+
+1 <= s1.length, s2.length <= 104
+s1 and s2 consist of lowercase English letters.
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        int n=s1.length(),n2=s2.length(),st=0,end=n-1;
+        int freq[26]={0};
+        for(int i=0;i<n;i++){
+            freq[s1[i]-'a']++;
+        }
+        while(end<n2){
+            int windowFreq[26]={0};
+            for(int i=st;i<=end;i++){
+                windowFreq[s2[i]-'a']++;
+            }
+            if(equal(freq,freq+26,windowFreq)){
+                return true;
+            }
+            else{
+                st++;
+                end++;
+            }
+        }
+        return false;
+    }
+};
+n = s1.length()
+m = s2.length()
+Step 1: Build freq
+for (int i = 0; i < n; i++)
+    freq[s1[i] - 'a']++;
+
+Time: O(n)
+
+Step 2: Sliding the window
+
+The window moves:
+
+while (end < n2)
+
+Number of windows:
+
+m - n + 1
+
+≈ O(m) windows.
+
+Step 3: Build windowFreq for every window
+
+For every window:
+
+for (int i = st; i <= end; i++)
+
+(after fixing the loop)
+
+This iterates over n characters.
+
+Time per window: O(n)
+
+Step 4: Compare frequency arrays
+equal(freq, freq + 26, windowFreq)
+
+The arrays have size 26.
+
+Time: O(26) = O(1)
+
+Total
+O(n)
++
+O((m - n + 1) × (n + 26))
+
+Since 26 is constant,
+
+O(n + (m - n + 1) × n)
+
+which simplifies to
+
+O(m × n)
+Space Complexity
+
+Two arrays of size 26:
+
+freq[26]
+windowFreq[26]
+
+So
+
+O(1)
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        int n=s1.length(),n2=s2.length();
+        int freq[26]={0}, windowFreq[26]={0};
+        if(n>n2){return false;}
+        for(int i=0;i<n;i++){
+            freq[s1[i]-'a']++;
+            windowFreq[s2[i]-'a']++;
+        }
+        if(equal(freq,freq+26,windowFreq)){
+                return true;
+            }
+        for(int i=n;i<n2;i++){
+            windowFreq[s2[i]-'a']++;
+            windowFreq[s2[i-n]-'a']--;
+            if(equal(freq,freq+26,windowFreq)){
+                return true;
+            }
+        }
+        return false;
+    }
+}; using proper sliding window
