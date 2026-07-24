@@ -1,0 +1,72 @@
+54. Spiral Matrix
+Solved
+Medium
+Topics
+premium lock icon
+Companies
+Hint
+Given an m x n matrix, return all elements of the matrix in spiral order.
+
+ 
+
+Example 1:
+
+
+Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+Output: [1,2,3,6,9,8,7,4,5]
+Example 2:
+
+
+Input: matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+Output: [1,2,3,4,8,12,11,10,9,5,6,7]
+ 
+
+Constraints:
+
+m == matrix.length
+n == matrix[i].length
+1 <= m, n <= 10
+-100 <= matrix[i][j] <= 100
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        if (matrix.empty() || matrix[0].empty())
+            return {};
+
+        int row = matrix.size(), col = matrix[0].size();
+        vector<int> ans;
+
+        int srow = 0, erow = row - 1;
+        int scol = 0, ecol = col - 1;
+
+        while (srow <= erow && scol <= ecol) {
+
+            // top
+            for (int i = scol; i <= ecol; i++)
+                ans.push_back(matrix[srow][i]);
+
+            // right
+            for (int i = srow + 1; i <= erow; i++)
+                ans.push_back(matrix[i][ecol]);
+
+            // bottom
+            if (srow < erow) {
+                for (int i = ecol - 1; i >= scol; i--)
+                    ans.push_back(matrix[erow][i]);
+            }
+
+            // left
+            if (scol < ecol) {
+                for (int i = erow - 1; i > srow; i--)
+                    ans.push_back(matrix[i][scol]);
+            }
+
+            srow++;
+            erow--;
+            scol++;
+            ecol--;
+        }
+
+        return ans;
+    }
+};
