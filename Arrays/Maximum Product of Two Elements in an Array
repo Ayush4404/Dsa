@@ -36,3 +36,5 @@ public:
         return maxp;
     }
 };
+
+better apporoch is to find the highest and second highest element in the array and return there product 
