@@ -67,3 +67,289 @@ public:
         return left+mid+right;
     }
 };
+
+Step 1: Count the frequency of each character
+vector<int> freq(26, 0);
+
+Creates an array of size 26 (for a to z).
+
+Initially:
+
+a b c d e ... z
+0 0 0 0 0 ... 0
+for (char c : s)
+    freq[c - 'a']++;
+
+Count every character.
+
+Example
+s = "babab"
+
+Iteration:
+
+c = 'b'
+freq[1]++
+
+c = 'a'
+freq[0]++
+
+c = 'b'
+freq[1]++
+
+c = 'a'
+freq[0]++
+
+c = 'b'
+freq[1]++
+
+Now
+
+a : 2
+b : 3
+others : 0
+
+So
+
+freq =
+
+a 2
+b 3
+c 0
+d 0
+...
+Step 2: Create left and middle
+string left = "";
+string mid = "";
+
+Initially
+
+left = ""
+mid = ""
+Step 3: Traverse all letters
+for (int i = 0; i < 26; i++) {
+
+We visit
+
+a
+b
+c
+...
+z
+
+This is important because alphabetical order gives the smallest lexicographical answer.
+
+Step 4: Put half the letters into the left half
+left += string(freq[i] / 2, 'a' + i);
+
+This is the most important line.
+
+Suppose
+
+a : 2
+
+Then
+
+freq[i]/2 = 1
+
+So
+
+string(1,'a')
+
+creates
+
+"a"
+
+and appends it.
+
+Another example
+
+d : 6
+
+Then
+
+freq[i]/2 = 3
+
+So
+
+string(3,'d')
+
+creates
+
+"ddd"
+Example
+a : 2
+b : 3
+
+For a
+
+left += "a"
+
+left becomes
+
+"a"
+
+For b
+
+3/2 = 1
+left += "b"
+
+left becomes
+
+"ab"
+Why only half?
+
+Suppose we have
+
+aaaa
+
+A palindrome looks like
+
+aa | aa
+
+The first half automatically determines the second half.
+
+So we only construct
+
+aa
+
+The remaining half is obtained by reversing it.
+
+Step 5: Find the middle character
+if (freq[i] % 2)
+    mid = char('a' + i);
+
+If frequency is odd,
+
+that character must sit in the center.
+
+Example
+
+b : 3
+3 % 2 = 1
+
+So
+
+mid = "b"
+
+If no character has an odd frequency,
+
+mid = ""
+Example
+a : 2
+b : 3
+
+Result
+
+left = "ab"
+
+mid = "b"
+Step 6: Make the right half
+string right = left;
+
+Copy
+
+left = "ab"
+
+right = "ab"
+
+Now
+
+reverse(right.begin(), right.end());
+
+Reverse
+
+"ab"
+
+↓
+
+"ba"
+Step 7: Join everything
+return left + mid + right;
+left  = "ab"
+
+mid   = "b"
+
+right = "ba"
+
+Answer
+
+"abbba"
+Complete Dry Run
+
+Take
+
+s = "daccad"
+Frequency
+a : 2
+c : 2
+d : 2
+Build left
+
+For a
+
+2/2 = 1
+
+left = "a"
+
+For c
+
+2/2 = 1
+
+left = "ac"
+
+For d
+
+2/2 = 1
+
+left = "acd"
+
+No odd frequency
+
+mid = ""
+Copy
+right = "acd"
+
+Reverse
+
+"dca"
+
+Join
+
+acd
+
++
+
+""
+
++
+
+dca
+
+=
+
+acddca
+Why is this the lexicographically smallest?
+
+Suppose the frequencies are:
+
+a : 2
+b : 2
+c : 2
+
+Possible left halves are:
+
+abc
+acb
+bac
+bca
+cab
+cba
+
+These generate different palindromes:
+
+abccba
+acbbca
+baccab
+...
+
+The smallest is the one whose left half is alphabetically smallest, i.e., "abc". Since the first differing character determines lexicographic order, placing the smallest available letters in the left half as early as possible guarantees the smallest overall palindrome. That's why the loop processes characters from 'a' to 'z' and appends freq[i] / 2 copies of each.
