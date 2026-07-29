@@ -1,0 +1,50 @@
+78. Subsets
+Solved
+Medium
+Topics
+premium lock icon
+Companies
+Given an integer array nums of unique elements, return all possible subsets (the power set).
+
+The solution set must not contain duplicate subsets. Return the solution in any order.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,3]
+Output: [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+Example 2:
+
+Input: nums = [0]
+Output: [[],[0]]
+ 
+
+Constraints:
+
+1 <= nums.length <= 10
+-10 <= nums[i] <= 10
+All the numbers of nums are unique.
+
+class Solution {
+public:
+    void getSubset(vector<int>&nums,vector<int>ans,int i,vector<vector<int>>&allSubset){
+        if(i==nums.size()){
+            allSubset.push_back({ans});
+            return;
+        }
+        //include
+        ans.push_back(nums[i]);
+        getSubset(nums,ans,i+1,allSubset);
+        ans.pop_back();
+        //exclude
+        getSubset(nums,ans,i+1,allSubset);
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<int>ans;
+        vector<vector<int>>allSubset;
+        getSubset(nums,ans,0,allSubset);
+        return allSubset;
+    }
+};
+time complexity of:O(2^n*n)
