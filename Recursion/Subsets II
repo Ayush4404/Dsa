@@ -1,0 +1,148 @@
+90. Subsets II
+Solved
+Medium
+Topics
+premium lock icon
+Companies
+Given an integer array nums that may contain duplicates, return all possible subsets (the power set).
+
+The solution set must not contain duplicate subsets. Return the solution in any order.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,2]
+Output: [[],[1],[1,2],[1,2,2],[2],[2,2]]
+Example 2:
+
+Input: nums = [0]
+Output: [[],[0]]
+ 
+
+Constraints:
+
+1 <= nums.length <= 10
+-10 <= nums[i] <= 10
+
+class Solution {
+public:
+    void printSub(vector<int>&nums,vector<int>&ans,int i,vector<vector<int>>&allSub){
+        if(i==nums.size()){
+            allSub.push_back({ans});
+            return;
+        }
+        ans.push_back(nums[i]);
+        printSub(nums,ans,i+1,allSub);
+        ans.pop_back();
+        //exclude:
+        int idx=i+1;
+        while(idx<nums.size()&&nums[idx]==nums[idx-1]){
+            idx++;
+        }
+        printSub(nums,ans,idx,allSub);
+    }
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<int>ans;
+        vector<vector<int>>allSub;
+        sort(nums.begin(),nums.end());
+        printSub(nums,ans,0,allSub);
+        return allSub;
+    }
+};
+Time Complexity
+
+Sorting
+
+sort(nums.begin(), nums.end()) takes:
+O(nlogn)
+
+Recursive subset generation
+
+In the worst case (all elements are distinct), every element has two choices (include/exclude), so the recursion generates:
+2
+n
+
+subsets.
+
+Copying each subset into allSub takes time proportional to its length.
+The total size of all subsets is:
+O(n⋅2
+n
+)
+
+Even when duplicates exist, the worst case is still when all elements are distinct.
+
+Hence,
+
+Time=O(nlogn+n⋅2
+n
+)
+	​
+
+
+Since n2
+n
+ dominates nlogn,
+
+Time=O(n⋅2
+n
+)
+	​
+
+Space Complexity
+
+There are three contributors:
+
+Recursion stack
+
+Maximum depth is n:
+O(n)
+
+Current subset (ans)
+
+Can store at most n elements:
+O(n)
+
+Output vector (allSub)
+
+Stores all subsets.
+Total elements stored across all subsets:
+O(n⋅2
+n
+)
+
+Therefore,
+
+Auxiliary space (excluding output):
+
+O(n)
+	​
+
+
+Including output storage:
+
+O(n⋅2
+n
+)
+	​
+
+Final Answer
+Time Complexity: 
+O(n⋅2
+n
+)
+	​
+
+Auxiliary Space (excluding output): 
+O(n)
+	​
+
+Total Space (including output): 
+O(n⋅2
+n
+)
+	​
+
+
+Your duplicate-skipping logic (while(idx < nums.size() && nums[idx] == nums[idx-1]) idx++;) correctly ensures that duplicate subsets are not generated.
