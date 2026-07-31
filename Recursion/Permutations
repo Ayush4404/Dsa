@@ -76,3 +76,26 @@ There are n! permutations, each of length n:
 
 O(n×n!)
 	​
+permutation in string:
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include<string>
+using namespace std;
+void getP(string&str,int idx){
+    if(idx==str.size()){
+        cout<<str+" ";
+        return;
+    }
+    for(int i=idx;i<str.size();i++){
+        swap(str[i],str[idx]);
+        getP(str,idx+1);
+        swap(str[i],str[idx]);
+    }
+}
+
+int main() {
+    string str="abc";
+    getP(str,0);
+
+    return 0;
+}
