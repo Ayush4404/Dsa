@@ -1,0 +1,58 @@
+131. Palindrome Partitioning
+Solved
+Medium
+Topics
+premium lock icon
+Companies
+Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
+
+ 
+
+Example 1:
+
+Input: s = "aab"
+Output: [["a","a","b"],["aa","b"]]
+Example 2:
+
+Input: s = "a"
+Output: [["a"]]
+ 
+
+Constraints:
+
+1 <= s.length <= 16
+s contains only lowercase English letters.
+
+class Solution {
+public:
+    bool isPalin(string part){
+        int st=0,end=part.size()-1;
+        while(st<end){
+            if(part[st]!=part[end]){
+                return false;
+            }
+            st++;end--;
+        }
+        return true;
+    }
+    void getAllPart(string s,vector<string>&partition,vector<vector<string>>&ans){
+        if(s.size()==0){
+            ans.push_back({partition});
+            return;
+        }
+        for(int i=0;i<s.size();i++){
+            string part=s.substr(0,i+1);
+            if(isPalin(part)){
+                partition.push_back({part});
+                getAllPart(s.substr(i+1),partition,ans);
+                partition.pop_back();
+            }
+        }
+    }
+    vector<vector<string>> partition(string s) {
+        vector<vector<string>>ans;
+        vector<string>partition;
+        getAllPart(s,partition,ans);
+        return ans;
+    }
+};
