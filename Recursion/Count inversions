@@ -1,0 +1,80 @@
+Count inversions :  i<j and arr[i]>arr[j]
+
+Brute Force
+#include <iostream>
+#include<vector>
+using namespace std;
+int countInversion(vector<int>&arr){
+    int count=0;
+    if(arr.size()<=0){
+        return 0;
+    }
+    for(int i=0;i<arr.size();i++){
+        for(int j=i;j<arr.size();j++){
+            if(i<j&&arr[i]>arr[j]){//no need for the i<j as it would be always true
+                count++; 
+            }
+        }
+    }
+    return count;
+}
+int main() {
+    vector<int>arr={6,3,5,2,7};
+    cout<<countInversion(arr);
+
+    return 0;
+}
+time complexity is O(n^2);
+
+optimal approach we will use the mergesort -> merge part
+
+
+
+#include <iostream>
+#include<vector>
+using namespace std;
+int merge(vector<int>&arr,int st,int mid,int end){
+    vector<int>temp;
+    int i=st,j=mid+1,inversionCount=0;
+    while(i<=mid&&j<=end){
+        if(arr[i]<=arr[j]){
+            temp.push_back(arr[i]);
+            i++;
+        }
+        else{
+            temp.push_back(arr[j]);
+            inversionCount+=mid-i+1;//calculate the multiple inversion
+            j++;
+        }
+    }
+    while(i<=mid){
+        temp.push_back(arr[i]);
+        i++;
+    }
+    while(j<=end){
+        temp.push_back(arr[j]);
+        j++;
+    }
+    for(int idx=0;idx<temp.size();idx++){
+        arr[idx+st]=temp[idx];
+    }
+    return inversionCount;
+}
+int mergeSort(vector<int>&arr,int st,int end){
+    if(st<end){
+        int mid=st+(end-st)/2;
+        int LeftInversionCount=mergeSort(arr,st,mid);
+        int RightInversionCount=mergeSort(arr,mid+1,end);
+        int InversionCount=merge(arr,st,mid,end);
+        
+        return LeftInversionCount+RightInversionCount+InversionCount;
+    }
+    return 0;
+}
+int main() {
+    vector<int>arr={6,3,5,2,7};
+    cout<<mergeSort(arr,0,arr.size()-1);
+
+    return 0;
+}
+time compl:O(nlogn)
