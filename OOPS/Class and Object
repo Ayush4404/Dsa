@@ -1,0 +1,37 @@
+In oops class is the blueprint or the collection of the objects and object is the real world entity like a class is teacher and its properties are
+name subject dept and salary now for each teacher we either hard code these using string or make a class with all these and make the teacher 
+the objects this reduces the time in writing the same code again and again
+
+#include<iostream>
+#include<string>
+using namespace std;
+class Teacher{
+    //attributes or the properties
+private:
+    double salary;
+public:
+    string name;
+    string dept;
+    string subject;
+    // methods//member function
+    void changeDept(string newDept){
+        dept=newDept;
+    }
+    void setSalary(double s){//setter
+        salary=s;
+    }
+    double getSalary(){//getter
+        return salary;
+    }
+};
+
+int main(){
+    Teacher t1;
+    t1.name="Ayush";
+    t1.dept="CSE";
+    t1.subject="Compiler Design";
+    t1.setSalary(25000);
+    cout<<t1.name<<endl;
+    cout<<t1.getSalary();
+    return 0;
+}
