@@ -1,0 +1,411 @@
+Constructor
+
+a special method which is automatically called on creation of the objects 
+same name as class no retrn type
+#include<iostream>
+#include<string>
+using namespace std;
+class Teacher{
+    //attributes or the properties
+private:
+    double salary;
+public:
+    Teacher(){
+        cout<<"Inside a constructor"<<endl;
+    }
+    string name;
+    string dept;
+    string subject;
+    // methods//member function
+    void changeDept(string newDept){
+        dept=newDept;
+    }
+    void setSalary(double s){//setter
+        salary=s;
+    }
+    double getSalary(){//getter
+        return salary;
+    }
+};
+
+int main(){
+    Teacher t1;
+    t1.name="Ayush";
+    t1.dept="CSE";
+    t1.subject="Compiler Design";
+    t1.setSalary(25000);
+    cout<<t1.name<<endl;
+    cout<<t1.getSalary();
+    return 0;
+}
+
+or we can add a default value to all
+like 
+#include<iostream>
+#include<string>
+using namespace std;
+class Teacher{
+    //attributes or the properties
+private:
+    double salary;
+public:
+    Teacher(){
+        dept="CSE";//all will be of cse
+    }
+    string name;
+    string dept;
+    string subject;
+    // methods//member function
+    void changeDept(string newDept){
+        dept=newDept;
+    }
+    void setSalary(double s){//setter
+        salary=s;
+    }
+    double getSalary(){//getter
+        return salary;
+    }
+};
+
+int main(){
+    Teacher t1;
+    t1.name="Ayush";
+    t1.dept="CSE";
+    t1.subject="Compiler Design";
+    t1.setSalary(25000);
+    cout<<t1.name<<endl;
+    cout<<t1.getSalary();
+    return 0;
+}
+
+type are non para para copy
+#include<iostream>
+#include<string>
+using namespace std;
+class Teacher{
+    //attributes or the properties
+private:
+    double salary;
+public:
+    Teacher(string n,string d,string sub,double s){
+        name=n;
+        dept=d;
+        subject=sub;
+        salary=s;
+    }
+    string name;
+    string dept;
+    string subject;
+    // methods//member function
+    void changeDept(string newDept){
+        dept=newDept;
+    }
+    void setSalary(double s){//setter
+        salary=s;
+    }
+    double getSalary(){//getter
+        return salary;
+    }
+    void getInfo(){
+        cout<<"name:"<<name<<endl;
+        cout<<"dept:"<<dept<<endl;
+        cout<<"subject:"<<subject<<endl;
+        cout<<"salary:"<<salary<<endl;
+    }
+};
+
+int main(){
+    Teacher t1("Ayush","cse","cd",30000);
+    t1.getInfo();
+    // t1.name="Ayush";
+    // t1.dept="CSE";
+    // t1.subject="Compiler Design";
+    // t1.setSalary(25000);
+    // cout<<t1.name<<endl;
+    // cout<<t1.getSalary();
+    return 0;
+}
+
+this pointer 
+#include<iostream>
+#include<string>
+using namespace std;
+class Teacher{
+    //attributes or the properties
+private:
+    double salary;
+public:
+    Teacher(string n,string d,string subject,double s){
+        name=n;
+        dept=d;
+       this->subject=subject;
+        salary=s;
+    }
+    string name;
+    string dept;
+    string subject;
+    // methods//member function
+    void changeDept(string newDept){
+        dept=newDept;
+    }
+    void setSalary(double s){//setter
+        salary=s;
+    }
+    double getSalary(){//getter
+        return salary;
+    }
+    void getInfo(){
+        cout<<"name:"<<name<<endl;
+        cout<<"dept:"<<dept<<endl;
+        cout<<"subject:"<<subject<<endl;
+        cout<<"salary:"<<salary<<endl;
+    }
+};
+
+int main(){
+    Teacher t1("Ayush","cse","cd",30000);
+    t1.getInfo();
+    // t1.name="Ayush";
+    // t1.dept="CSE";
+    // t1.subject="Compiler Design";
+    // t1.setSalary(25000);
+    // cout<<t1.name<<endl;
+    // cout<<t1.getSalary();
+    return 0;
+}
+
+copy 
+#include<iostream>
+#include<string>
+using namespace std;
+class Teacher{
+    //attributes or the properties
+private:
+    double salary;
+public:
+    Teacher(string n,string d,string subject,double s){
+        name=n;
+        dept=d;
+       this->subject=subject;
+        salary=s;
+    }
+    string name;
+    string dept;
+    string subject;
+    // methods//member function
+    void changeDept(string newDept){
+        dept=newDept;
+    }
+    void setSalary(double s){//setter
+        salary=s;
+    }
+    double getSalary(){//getter
+        return salary;
+    }
+    void getInfo(){
+        cout<<"name:"<<name<<endl;
+        cout<<"dept:"<<dept<<endl;
+        cout<<"subject:"<<subject<<endl;
+        cout<<"salary:"<<salary<<endl;
+    }
+};
+
+int main(){
+    Teacher t1("Ayush","cse","cd",30000);
+    t1.getInfo();
+    Teacher t2(t1);
+    t2.getInfo();
+    // t1.name="Ayush";
+    // t1.dept="CSE";
+    // t1.subject="Compiler Design";
+    // t1.setSalary(25000);
+    // cout<<t1.name<<endl;
+    // cout<<t1.getSalary();
+    return 0;
+}
+ copy types are shallow copy and deep copy
+
+#include<iostream>
+#include<string>
+using namespace std;
+class Student{
+public:
+    string name;
+    string cgpa;
+    Student(string name,string cgpa){
+        this->name=name;
+        this->cgpa=cgpa;
+    }
+    void getInfo(){
+        cout<<"name: "<<name<<endl;
+        cout<<"cgpa: "<<cgpa<<endl;
+        
+    }
+};
+
+int main(){
+    Student s1("Ayush","8.9");
+    Student s2(s1);
+    s2.getInfo();
+    return 0;
+}
+
+own copy 
+#include<iostream>
+#include<string>
+using namespace std;
+class Student{
+public:
+    string name;
+    string cgpa;
+    Student(string name,string cgpa){
+        this->name=name;
+        this->cgpa=cgpa;
+    }
+    Student(Student &obj){
+        this->name=obj.name;
+        this->cgpa=obj.cgpa;
+    }
+    void getInfo(){
+        cout<<"name: "<<name<<endl;
+        cout<<"cgpa: "<<cgpa<<endl;
+        
+    }
+};
+
+int main(){
+    Student s1("Ayush","8.9");
+    Student s2(s1);
+    s2.getInfo();
+    return 0;
+}
+
+
+
+#include<iostream>
+#include<string>
+using namespace std;
+class Student{
+public:
+    string name;
+    double* cgpaptr;
+    Student(string name,double cgpa){
+        this->name=name;
+        cgpaptr=new double;//heap
+        *cgpaptr=cgpa;
+    }
+    Student(Student &obj){
+        this->name=obj.name;
+        this->cgpaptr=obj.cgpaptr;
+    }
+    void getInfo(){
+        cout<<"name: "<<name<<endl;
+        cout<<"cgpa: "<<*cgpaptr<<endl;
+        
+    }
+};
+
+int main(){
+    Student s1("Ayush",8.9);
+    Student s2(s1);
+    s1.getInfo();
+    *(s2.cgpaptr)=9.2;
+    s1.getInfo();
+    return 0;
+}
+
+name: Ayush
+cgpa: 8.9
+name: Ayush
+cgpa: 9.2
+#include<iostream>
+#include<string>
+using namespace std;
+class Student{
+public:
+    string name;
+    double* cgpaptr;
+    Student(string name,double cgpa){
+        this->name=name;
+        cgpaptr=new double;//heap
+        *cgpaptr=cgpa;
+    }
+    Student(Student &obj){
+        this->name=obj.name;
+        cgpaptr=new double;
+        *cgpaptr=*obj.cgpaptr;
+    }
+    void getInfo(){
+        cout<<"name: "<<name<<endl;
+        cout<<"cgpa: "<<*cgpaptr<<endl;
+        
+    }
+};
+
+int main(){
+    Student s1("Ayush",8.9);
+    Student s2(s1);
+    s1.getInfo();
+    *(s2.cgpaptr)=9.2;
+    s1.getInfo();
+    s2.name="Neha";
+    s2.getInfo();
+    return 0;
+}
+name: Ayush
+cgpa: 8.9
+name: Ayush
+cgpa: 8.9
+name: Neha
+cgpa: 9.2
+
+=== Code Execution Successful ===
+problem of the shallow copy
+
+#include<iostream>
+#include<string>
+using namespace std;
+class Student{
+public:
+    string name;
+    double* cgpaptr;
+    Student(string name,double cgpa){
+        this->name=name;
+        cgpaptr=new double;//heap
+        *cgpaptr=cgpa;
+    }
+    Student(Student &obj){
+        this->name=obj.name;
+        cgpaptr=new double;
+        *cgpaptr=*obj.cgpaptr;
+    }
+    void getInfo(){
+        cout<<"name: "<<name<<endl;
+        cout<<"cgpa: "<<*cgpaptr<<endl;
+        
+    }
+    ~Student(){
+        cout<<"Dectructor"<<endl;
+        delete cgpaptr;//delete the dynamic because it leads to memory leaks
+    }
+};
+
+int main(){
+    Student s1("Ayush",8.9);
+    Student s2(s1);
+    s1.getInfo();
+    *(s2.cgpaptr)=9.2;
+    s1.getInfo();
+    s2.name="Neha";
+    s2.getInfo();
+    return 0;
+}
+
+name: Ayush
+cgpa: 8.9
+name: Ayush
+cgpa: 8.9
+name: Neha
+cgpa: 9.2
+Dectructor
+Dectructor
