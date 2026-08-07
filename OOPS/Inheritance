@@ -1,0 +1,146 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class Person{
+public:
+    string name;
+    int age;
+    Person(){
+        cout<<"Base Class Constructor"<<endl;
+    }
+};
+class Student:public Person{
+public:
+    int rollno;
+    Student(){
+        cout<<"derived Class Constructor"<<endl;
+    }
+    void getInfo(){
+        cout<<"name: "<<name<<endl;
+        cout<<"age: "<<age<<endl;
+        cout<<"rollno: "<<rollno<<endl;
+        
+    }
+};
+
+int main(){
+    Student s1;
+    s1.name="Ayush";
+    s1.age=21;
+    s1.rollno=2319960;
+    s1.getInfo();
+   
+    return 0;
+}
+Base Class Constructor
+derived Class Constructor
+name: Ayush
+age: 21
+rollno: 2319960
+
+
+=== Code Execution Successful ===
+
+#include<iostream>
+#include<string>
+using namespace std;
+class Person{
+public:
+    string name;
+    int age;
+    Person(){
+        cout<<"Base Class Constructor"<<endl;
+    }
+    ~Person(){
+        cout<<"Desructor in Base"<<endl;
+    }
+};
+class Student:public Person{
+public:
+    int rollno;
+    Student(){
+        cout<<"derived Class Constructor"<<endl;
+    }
+    void getInfo(){
+        cout<<"name: "<<name<<endl;
+        cout<<"age: "<<age<<endl;
+        cout<<"rollno: "<<rollno<<endl;
+        
+    }
+    ~Student(){
+        cout<<"Desructor in derived"<<endl;
+    }
+};
+
+int main(){
+    Student s1;
+    s1.name="Ayush";
+    s1.age=21;
+    s1.rollno=2319960;
+    s1.getInfo();
+   
+    return 0;
+}
+
+Base Class Constructor
+derived Class Constructor
+name: Ayush
+age: 21
+rollno: 2319960
+Desructor in derived
+Desructor in Base
+
+
+=== Code Execution Successful ===
+
+
+#include<iostream>
+#include<string>
+using namespace std;
+class Person{
+public:
+    string name;
+    int age;
+    Person(string name,int age){
+        cout<<"Base Class Constructor"<<endl;
+        this->name=name;
+        this->age=age;
+    }
+    ~Person(){
+        cout<<"Desructor in Base"<<endl;
+    }
+};
+class Student:public Person{
+public:
+    int rollno;
+    Student(string name,int age,int rollno): Person(name,age){
+        cout<<"derived Class Constructor"<<endl;
+        this->rollno=rollno;
+    }
+    void getInfo(){
+        cout<<"name: "<<name<<endl;
+        cout<<"age: "<<age<<endl;
+        cout<<"rollno: "<<rollno<<endl;
+        
+    }
+    ~Student(){
+        cout<<"Desructor in derived"<<endl;
+    }
+};
+
+int main(){
+    Student s1("Ayush",21,2319960);
+    s1.getInfo(); 
+    return 0;
+}
+
+Base Class Constructor
+derived Class Constructor
+name: Ayush
+age: 21
+rollno: 2319960
+Desructor in derived
+Desructor in Base
+
+
+=== Code Execution Successful ===
