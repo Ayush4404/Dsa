@@ -1,0 +1,35 @@
+wrapping of data and member function in a single unit clas helps in data hiding using private access modifier 
+
+#include<iostream>
+#include<string>
+using namespace std;
+class Teacher{
+    //attributes or the properties
+private:
+    double salary;//data hiding
+public:
+    string name;
+    string dept;
+    string subject;
+    // methods//member function
+    void changeDept(string newDept){
+        dept=newDept;
+    }
+    void setSalary(double s){//setter
+        salary=s;
+    }
+    double getSalary(){//getter
+        return salary;
+    }
+};
+
+int main(){
+    Teacher t1;
+    t1.name="Ayush";
+    t1.dept="CSE";
+    t1.subject="Compiler Design";
+    t1.setSalary(25000);
+    cout<<t1.name<<endl;
+    cout<<t1.getSalary();
+    return 0;
+}
