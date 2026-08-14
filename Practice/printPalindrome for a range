@@ -1,0 +1,40 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <iostream>
+using namespace std;
+bool isPalindrome(int n){
+    int temp=n,reverse=0;
+    while(temp!=0){
+        reverse=reverse*10+temp%10;
+        temp/=10;
+    }
+    if(reverse==n){
+        return true;
+    }
+    return false;
+}
+void printPalindrome(int low,int high){
+    if(low>high){
+        cout<<"-1";
+    }
+    int n=low;
+    while(n<=high){
+        if(isPalindrome(n)){
+            cout<<n<<" ";
+        }
+        n++;
+    }
+}
+int main()
+{
+    int low=100,high=200;
+    printPalindrome(low,high);
+
+    return 0;
+}
