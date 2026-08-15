@@ -205,3 +205,5 @@ public:
         return ans2;
     }
 };
+time comp=O(n)
+space=O(n)
