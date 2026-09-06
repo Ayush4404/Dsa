@@ -1,0 +1,124 @@
+662. Maximum Width of Binary Tree
+Medium
+Topics
+premium lock icon
+Companies
+Given the root of a binary tree, return the maximum width of the given tree.
+
+The maximum width of a tree is the maximum width among all levels.
+
+The width of one level is defined as the length between the end-nodes (the leftmost and rightmost non-null nodes), where the null nodes between the end-nodes that would be present in a complete binary tree extending down to that level are also counted into the length calculation.
+
+It is guaranteed that the answer will in the range of a 32-bit signed integer.
+
+ 
+
+Example 1:
+
+
+Input: root = [1,3,2,5,3,null,9]
+Output: 4
+Explanation: The maximum width exists in the third level with length 4 (5,3,null,9).
+Example 2:
+
+
+Input: root = [1,3,2,5,null,null,9,6,null,7]
+Output: 7
+Explanation: The maximum width exists in the fourth level with length 7 (6,null,null,null,null,null,7).
+Example 3:
+
+
+Input: root = [1,3,2,5]
+Output: 2
+Explanation: The maximum width exists in the second level with length 2 (3,2).
+ 
+
+Constraints:
+
+The number of nodes in the tree is in the range [1, 3000].
+-100 <= Node.val <= 100
+
+my first approach
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int widthOfBinaryTree(TreeNode* root) {
+        queue<TreeNode*,int>q;
+        if(root==NULL){
+            return -1;
+        }
+        q.push({root,0});
+        while(q.size()>0){
+            TreeNode* curr=new TreeNode(root);
+            int currHd=q.front().second;
+            q.pop();
+            if(curr->left!=NULL){
+                q.push({curr->left,currHd*2+1});
+            }
+            if(curr->right!=NULL){
+                q.push({curr->right,currHd*2+2});
+            }
+        }
+        return q.front().second-q.back().second+1
+    }
+};
+
+problem
+Incorrect Queue Syntax: You declared the queue as queue<TreeNode*, int> q;. A standard C++ std::queue accepts only one data type as 
+its template argument. To store both the node pointer and its coordinate index together, you must wrap them inside a std::pair,
+like this: queue<pair<TreeNode*, int>> q;.Node Allocation Bug: Inside your loop, the line TreeNode* curr = new TreeNode(root); 
+creates a brand new node in memory using root as a constructor argument rather than processing the front node extracted from your 
+queue. Furthermore, because you are extracting elements using q.front().second, you forgot to capture the actual pointer from the 
+queue pair.Loss of Level-by-Level Scope: The problem requires tracking the maximum width across any single level. Your loop currently 
+processes nodes one by one continuously. Without capturing the queue's size at the start of each level (int size = q.size();) and using 
+a nested loop, you cannot easily track where one level ends and the next begins.Accessing an Empty Queue: At the very end of your 
+function, you attempt to do q.front().second - q.back().second + 1. By the time the while loop finishes, the queue is completely empty 
+(q.size() == 0), which will cause a runtime crash when you attempt to access .front() or .back().Missing Semicolon: You are missing a 
+semicolon ; at the end of your return statement.
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int widthOfBinaryTree(TreeNode* root) {
+        queue<pair<TreeNode*,unsigned long long>>q;
+        int maxWidth=INT_MIN;
+        q.push({root,0});
+        while(q.size()>0){
+            int currLevelSize=q.size();
+            unsigned long long stIdx=q.front().second;
+            unsigned long long endIdx=q.back().second;
+            maxWidth=max(maxWidth,(int)(endIdx-stIdx+1));
+            for(int i=0;i<currLevelSize;i++){
+                auto curr=q.front();
+                q.pop();
+                if(curr.first->left){
+                    q.push({curr.first->left,curr.second*2+1});
+                }
+                if(curr.first->right){
+                    q.push({curr.first->right,curr.second*2+2});
+                }
+            }
+        }
+        return maxWidth;
+    }
+};
